@@ -7,7 +7,7 @@ public class Tile : MonoBehaviour
 {
     public int Column { get { return m_Column; } }
     public int Row { get { return m_Row; } }
-    public int HP { get { return m_HP; } }
+    public HP HP { get { return m_HP; } }
     public bool isChecked;
 
     [SerializeField] private GameObject[] tiles;
@@ -21,7 +21,9 @@ public class Tile : MonoBehaviour
     //[SerializeField]
     private int m_Row;
 
-    private int m_HP;
+    private HP m_HP;
+
+    private Board m_board;
 
     private void Start()
     {
@@ -31,6 +33,7 @@ public class Tile : MonoBehaviour
     private void OnMouseDown()
     {
         Debug.Log(m_Column+":"+m_Row);
+        m_board.Game.Dig(this);
     }
 
     private void OnMouseOver()
@@ -46,19 +49,21 @@ public class Tile : MonoBehaviour
         StopCoroutine(_changeTile.ColorCoroutine());
     }
 
-    public void Initialize(int columnIndex, int rowIndex,int HPIndex)
+    public void Initialize(int columnIndex, int rowIndex,int HPIndex,Board board)
     {
         m_Column = columnIndex;
         m_Row = rowIndex;
-        m_HP = HPIndex;
-
+        m_HP = new HP(HPIndex);
+        m_HP.Subscribe(UpdateTile);
+        m_board = board;
         
-        UpdateTile();
+        UpdateTile(HP.GetHP());
     }
 
-    private void UpdateTile()
+    private void UpdateTile(int value)
     {
-        GameObject targetTile = GetNumberTile();
+        Debug.Log("Update");
+        GameObject targetTile = GetNumberTile(value);
         foreach (var tile in tiles)
         {
             tile.SetActive(false);
@@ -66,9 +71,9 @@ public class Tile : MonoBehaviour
         targetTile.SetActive(true);
     }
 
-    private GameObject GetNumberTile()
+    private GameObject GetNumberTile(int value)
     {
-        return tiles[HP];
+        return tiles[value];
     }
 
 }

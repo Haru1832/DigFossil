@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class Board : MonoBehaviour
 {
-    
+    [SerializeField] private Game game;
+
+    public Game Game => game;
+
     // [SerializeField]
     // private Game m_Game;
     [SerializeField]
@@ -40,15 +43,15 @@ public class Board : MonoBehaviour
                 float xPos = -(m_Columns/2f) + i + 0.5f;
                 float yPos = -(m_Rows/2f) + j ;
                 
-                    var newTileObject = GameObject.Instantiate(m_TilePrefab, new Vector3(xPos, 0, yPos), Quaternion.Euler(90,0,0));
-                    var newTile = newTileObject.GetComponent<Tile>();
+                var newTileObject = GameObject.Instantiate(m_TilePrefab, new Vector3(xPos, 0, yPos), Quaternion.Euler(90,0,0));
+                var newTile = newTileObject.GetComponent<Tile>();
 
-                    if (newTile != null)
-                    {
-                        int random = Random.Range(0, 6);
-                        newTile.Initialize(i, j,random);
-                        m_TilesList.Add(newTile);
-                    }
+                if (newTile != null)
+                {
+                    int random = Random.Range(0, 6);
+                    newTile.Initialize(i, j,random,this);
+                    m_TilesList.Add(newTile);
+                }
             }
         }
     }
