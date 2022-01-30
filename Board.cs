@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Board : MonoBehaviour
 {
+    [SerializeField] private Canvas canvas;
+    
     [SerializeField] private Game game;
 
     public Game Game => game;
@@ -68,6 +70,8 @@ public class Board : MonoBehaviour
         void SetItems()
         {
 
+            List<GameObject> itemImages=new List<GameObject>();
+            
             foreach (Item item in Items)
             {
                 var canColumns = m_Columns - item.width;
@@ -76,6 +80,13 @@ public class Board : MonoBehaviour
                 var column = Random.Range(0, canColumns);
                 var row = Random.Range(0, canRows);
 
+                float xPos = -(m_Columns/2f) + column + (item.width/2f) ;
+                float yPos = -(m_Rows/2f) + row + (item.height/2f)-0.5f;
+                
+                var itemImage = Instantiate(item.gameObject, new Vector3(xPos, 0, yPos), Quaternion.Euler(90,0,0),canvas.transform);
+
+                itemImages.Add(itemImage);
+                
                 var tiles = boardTileArray2d;
 
                 for (int i = 0; i < item.width; i++)
@@ -89,6 +100,12 @@ public class Board : MonoBehaviour
                             {
                                 _tile.isUnderItem = false;
                             }
+
+                            foreach (var image in itemImages)
+                            {
+                                Destroy(image);
+                            }
+                            itemImages.Clear();
                             SetItems();
                             return;
                         }
