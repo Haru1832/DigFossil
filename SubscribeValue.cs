@@ -1,5 +1,7 @@
 ﻿using System;
  
+//下記参照
+//https://hacchi-man.hatenablog.com/entry/2021/01/09/220000
 public class SubscribeValue<T>
 {
     public event Action<T> Subscribe;

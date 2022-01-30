@@ -8,7 +8,7 @@ public class Tile : MonoBehaviour
     public int Column { get { return m_Column; } }
     public int Row { get { return m_Row; } }
     public HP HP { get { return m_HP; } }
-    public bool isChecked;
+    public bool isUnderItem;
 
     [SerializeField] private GameObject[] tiles;
 
@@ -32,7 +32,7 @@ public class Tile : MonoBehaviour
 
     private void OnMouseDown()
     {
-        Debug.Log(m_Column+":"+m_Row);
+        Debug.Log(m_Column+":"+m_Row+":item="+isUnderItem);
         m_board.Game.Dig(this);
     }
 
@@ -62,7 +62,6 @@ public class Tile : MonoBehaviour
 
     private void UpdateTile(int value)
     {
-        Debug.Log("Update");
         GameObject targetTile = GetNumberTile(value);
         foreach (var tile in tiles)
         {
