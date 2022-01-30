@@ -10,6 +10,10 @@ public class Board : MonoBehaviour
 
     public Game Game => game;
 
+    public int Columns => m_Columns;
+    
+    public int Rows => m_Rows;
+
     // [SerializeField]
     // private Game m_Game;
     [SerializeField]
@@ -35,6 +39,7 @@ public class Board : MonoBehaviour
     void Start()
     {
         GenerateBoard();
+        GenerateItems();
     }
 
     private void GenerateBoard()
@@ -54,13 +59,13 @@ public class Board : MonoBehaviour
                 if (newTile != null)
                 {
                     int random = Random.Range(1, 6);
-                    newTile.Initialize(i, j,random,this);
+                    newTile.Initialize(i, j,random,game);
                     m_TilesList.Add(newTile);
                 }
             }
         }
         
-        GenerateItems();
+        
     }
 
     private void GenerateItems()

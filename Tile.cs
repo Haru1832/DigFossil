@@ -23,7 +23,7 @@ public class Tile : MonoBehaviour
 
     private HP m_HP;
 
-    private Board m_board;
+    private Game m_Game;
 
     private void Start()
     {
@@ -32,8 +32,9 @@ public class Tile : MonoBehaviour
 
     private void OnMouseDown()
     {
+        if (m_Game.IsFinished) return;
         Debug.Log(m_Column+":"+m_Row+":item="+isUnderItem);
-        m_board.Game.Dig(this);
+        m_Game.Dig(this);
     }
 
     private void OnMouseOver()
@@ -49,20 +50,22 @@ public class Tile : MonoBehaviour
         StopCoroutine(_changeTile.ColorCoroutine());
     }
 
-    public void Initialize(int columnIndex, int rowIndex,int HPIndex,Board board)
+    public void Initialize(int columnIndex, int rowIndex,int HPIndex,Game game)
     {
         m_Column = columnIndex;
         m_Row = rowIndex;
         m_HP = new HP(HPIndex);
         m_HP.Subscribe(UpdateTile);
-        m_board = board;
+        m_Game = game;
         
         UpdateTile(HP.GetHP());
     }
 
     private void UpdateTile(int value)
     {
+        value = value >= 0 ? value : 0;
         GameObject targetTile = GetNumberTile(value);
+        
         foreach (var tile in tiles)
         {
             tile.SetActive(false);
