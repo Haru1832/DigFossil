@@ -32,6 +32,7 @@ public class Tile : MonoBehaviour
 
     private void OnMouseDown()
     {
+        if (m_Game.IsGameStoped) return;
         if (m_Game.IsFinished) return;
         Debug.Log(m_Column+":"+m_Row+":item="+isUnderItem);
         m_Game.Dig(this);

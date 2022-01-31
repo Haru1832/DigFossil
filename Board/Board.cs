@@ -10,6 +10,8 @@ public class Board : MonoBehaviour
 
     public Game Game => game;
 
+    public BoardHP boardHP;
+
     public int Columns => m_Columns;
     
     public int Rows => m_Rows;
@@ -27,6 +29,11 @@ public class Board : MonoBehaviour
     [SerializeField] 
     private Item[] Items;
 
+    public int itemsLength
+    {
+        get { return Items.Length; }
+    }
+
     //Not the fastest collection but easy to use.
     private List<Tile> m_TilesList;
 
@@ -36,8 +43,10 @@ public class Board : MonoBehaviour
     }
     
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
+        boardHP = GetComponent<BoardHP>();
+        
         GenerateBoard();
         GenerateItems();
     }

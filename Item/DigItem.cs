@@ -7,7 +7,8 @@ public class DigItem
     public enum DigItems
     {
         Pickel,
-        Hummmer
+        Hammer,
+        Bomb
     }
 
     public ItemInfo GetItemInfo(DigItems item)
@@ -15,17 +16,20 @@ public class DigItem
         switch (item)
         {
             case DigItems.Pickel: return ItemInfos[(int) DigItems.Pickel];
-            case DigItems.Hummmer: return ItemInfos[(int) DigItems.Hummmer];
+            case DigItems.Hammer: return ItemInfos[(int) DigItems.Hammer];
+            case DigItems.Bomb: return ItemInfos[(int) DigItems.Bomb];
             
             default: return ItemInfos[(int) DigItems.Pickel];
         }
     }
 
-    public DigItems digItems=DigItems.Pickel;
+    //public DigItems digItems=DigItems.Pickel;
     
     ItemInfo[] ItemInfos = new ItemInfo[]
     {
-        new ItemInfo(DigItems.Pickel,PickelInfo) 
+        new ItemInfo(DigItems.Pickel,PickelInfo),
+        new ItemInfo(DigItems.Hammer,HammerInfo),
+        new ItemInfo(DigItems.Bomb,BombInfo), 
     };
 
     static Vector3[] PickelInfo = new Vector3[]
@@ -37,15 +41,23 @@ public class DigItem
         new Vector3(1,0,1),
     };
     
-    // static Vector3[] PickelInfo = new Vector3[]
-    // {
-    //     new Vector3(-1,0,1),
-    //     new Vector3(0,0,2), 
-    //     new Vector3(0,1,1), 
-    //     new Vector3(0,-1,1), 
-    //     new Vector3(1,0,1),
-    // };
+    static Vector3[] HammerInfo = new Vector3[]
+    {
+        new Vector3(-1,1,1),new Vector3(0,1,2),new Vector3(1,1,1),
+        new Vector3(-1,0,2), new Vector3(0,0,2),new Vector3(1,0,2),
+        new Vector3(-1,-1,1), new Vector3(0,-1,2),new Vector3(1,-1,1)
+    };
     
+    static Vector3[] BombInfo = new Vector3[]
+    {
+        new Vector3(-2,2,1),new Vector3(-1,2,1),new Vector3(0,2,1),new Vector3(1,2,1),new Vector3(2,2,1),
+        new Vector3(-2,1,1), new Vector3(-1,1,2),new Vector3(0,1,2),new Vector3(1,1,2),new Vector3(2,1,1),
+        new Vector3(-2,-0,1), new Vector3(-1,0,2),new Vector3(0,0,3),new Vector3(1,0,2),new Vector3(2,0,1),
+        new Vector3(-2,-1,1), new Vector3(-1,-1,2),new Vector3(0,-1,2),new Vector3(1,-1,2),new Vector3(2,-1,1),
+        new Vector3(-2,-2,1), new Vector3(-1,-2,1),new Vector3(0,-2,1),new Vector3(1,-2,1),new Vector3(2,-2,1),
+    };
+    
+
     public struct ItemInfo
     {
         public DigItems DigItem;

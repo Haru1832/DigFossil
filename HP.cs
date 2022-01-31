@@ -23,6 +23,12 @@ public class HP
         hp.Value -= value;
         hp.Value = hp.Value >= 0 ? hp.Value : 0;
     }
+
+    public bool isOverDamaged(int value)
+    {
+        var currentHP = hp.Value;
+        return currentHP - value < 0;
+    }
     
     public void Subscribe(Action<int> action)
     {
