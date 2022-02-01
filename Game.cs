@@ -13,7 +13,8 @@ public class Game : MonoBehaviour
     
     private ShakeCamera _camera;
 
-    [SerializeField] private GameObject finishText;
+    [SerializeField] private GameObject ClearText;
+    [SerializeField] private GameObject GameOverText;
     
     [SerializeField]
     private Board board;
@@ -76,7 +77,7 @@ public class Game : MonoBehaviour
 
         if (CheckGameEnd())
         {
-            finishText.SetActive(true);
+            ClearText.SetActive(true);
             IsFinished = true;
             return;
         }
@@ -84,7 +85,9 @@ public class Game : MonoBehaviour
         if (boardHp.BoardHp == 0)
         {
             //GameOver処理
-            
+            GameOverText.SetActive(true);
+            IsFinished = true;
+            return;
         }
     }
 
