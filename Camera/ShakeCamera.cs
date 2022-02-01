@@ -6,7 +6,7 @@ using UnityEngine;
 public class ShakeCamera : MonoBehaviour
 {
     private float defaultduration= 0.2f;
-    private float defaultstrength= 0.1f;
+    private float defaultstrength= 0.3f;
     private float ShakePower = 0.5f;
 
     private float ShakeTime = 0.2f;
