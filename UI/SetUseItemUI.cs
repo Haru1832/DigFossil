@@ -14,24 +14,24 @@ public class SetUseItemUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        game.ObserveEveryValueChanged(x => x.usingItem)
+        game.ObserveEveryValueChanged(x => x.usingItemEnum)
             .Subscribe(SetUI)
             .AddTo(this);
     }
 
-    void SetUI(DigItem.DigItems item)
+    void SetUI(DigItemEnum itemEnum)
     {
         PickelUI.SetActive(false);
         HammerUI.SetActive(false);
         BombUI.SetActive(false);
 
-        switch (item)
+        switch (itemEnum)
         {
-            case DigItem.DigItems.Pickel:PickelUI.SetActive(true);
+            case DigItemEnum.Pickel:PickelUI.SetActive(true);
                 break;
-            case DigItem.DigItems.Hammer:HammerUI.SetActive(true);
+            case DigItemEnum.Hammer:HammerUI.SetActive(true);
                 break;
-            case DigItem.DigItems.Bomb:BombUI.SetActive(true);
+            case DigItemEnum.Bomb:BombUI.SetActive(true);
                 break;
             default: break;
         }

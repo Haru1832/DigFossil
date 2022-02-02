@@ -4,22 +4,17 @@ using UnityEngine;
 
 public class DigItem 
 {
-    public enum DigItems
-    {
-        Pickel,
-        Hammer,
-        Bomb
-    }
+    
 
-    public ItemInfo GetItemInfo(DigItems item)
+    public ItemInfo GetItemInfo(DigItemEnum itemEnum)
     {
-        switch (item)
+        switch (itemEnum)
         {
-            case DigItems.Pickel: return ItemInfos[(int) DigItems.Pickel];
-            case DigItems.Hammer: return ItemInfos[(int) DigItems.Hammer];
-            case DigItems.Bomb: return ItemInfos[(int) DigItems.Bomb];
+            case DigItemEnum.Pickel: return ItemInfos[(int) DigItemEnum.Pickel];
+            case DigItemEnum.Hammer: return ItemInfos[(int) DigItemEnum.Hammer];
+            case DigItemEnum.Bomb: return ItemInfos[(int) DigItemEnum.Bomb];
             
-            default: return ItemInfos[(int) DigItems.Pickel];
+            default: return ItemInfos[(int) DigItemEnum.Pickel];
         }
     }
 
@@ -27,9 +22,9 @@ public class DigItem
     
     ItemInfo[] ItemInfos = new ItemInfo[]
     {
-        new ItemInfo(DigItems.Pickel,PickelInfo),
-        new ItemInfo(DigItems.Hammer,HammerInfo),
-        new ItemInfo(DigItems.Bomb,BombInfo), 
+        new ItemInfo(DigItemEnum.Pickel,PickelInfo),
+        new ItemInfo(DigItemEnum.Hammer,HammerInfo),
+        new ItemInfo(DigItemEnum.Bomb,BombInfo), 
     };
 
     static Vector3[] PickelInfo = new Vector3[]
@@ -58,15 +53,15 @@ public class DigItem
 
     public struct ItemInfo
     {
-        public DigItems DigItem;
+        public DigItemEnum DigItemEnum;
         public List<int> x;
         public List<int> y;
         public List<int> value;
         public int Length;
 
-        public ItemInfo(DigItems item,Vector3[] infos)
+        public ItemInfo(DigItemEnum itemEnum,Vector3[] infos)
         {
-            DigItem = item;
+            DigItemEnum = itemEnum;
             x=new List<int>();
             y=new List<int>();
             value=new List<int>();

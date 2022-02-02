@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class Game : MonoBehaviour
 {
+    [SerializeField] private SEManager SE;
+    [SerializeField] private EffectManager effect;
     [SerializeField] private Camera mainCamera;
     [SerializeField] private int PickelDamage=5;
     [SerializeField] private int HammerDamage=10;
@@ -27,7 +29,7 @@ public class Game : MonoBehaviour
     public bool IsGameStoped;
     public bool IsFinished { get; private set; } = false;
     
-    public DigItem.DigItems usingItem = DigItem.DigItems.Pickel;
+    public DigItemEnum usingItemEnum = DigItemEnum.Pickel;
 
     private void Start()
     {
@@ -40,7 +42,7 @@ public class Game : MonoBehaviour
         int sumMissDamage = 0;
         
         Tile[,] tiles = board.boardTileArray2d;
-        DigItem.ItemInfo itemInfo = _digItem.GetItemInfo(usingItem);
+        DigItem.ItemInfo itemInfo = _digItem.GetItemInfo(usingItemEnum);
         for (int i = 0; i < itemInfo.Length; i++)
         {
             bool limitColumn = tile.Column + itemInfo.x[i] >= board.Columns || tile.Column + itemInfo.x[i] < 0;
@@ -60,20 +62,21 @@ public class Game : MonoBehaviour
 
         }
 
-        switch (usingItem)
+        switch (usingItemEnum)
         {
-            case DigItem.DigItems.Pickel:boardHp.Subtract(PickelDamage);
+            case DigItemEnum.Pickel:boardHp.Subtract(PickelDamage);
                 break;
-            case DigItem.DigItems.Hammer:boardHp.Subtract(HammerDamage);
+            case DigItemEnum.Hammer:boardHp.Subtract(HammerDamage);
                 break;
-            case DigItem.DigItems.Bomb:boardHp.Subtract(BombDamage);
+            case DigItemEnum.Bomb:boardHp.Subtract(BombDamage);
                 break;
             default: break;
         }
 
         float addvalue = sumMissDamage / (float)MissDamage;
         _camera.Shake(addvalue,addvalue);
-        
+        effect.InstantiateEffect(usingItemEnum,tile.gameObject.transform);
+        SE.PlaySE(usingItemEnum);
 
         if (CheckGameEnd())
         {

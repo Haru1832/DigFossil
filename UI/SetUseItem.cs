@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class SetUseItem : MonoBehaviour
 {
-    [SerializeField] private DigItem.DigItems item;
+    [SerializeField] private DigItemEnum itemEnum;
     
     [SerializeField] private Game game;
     private Button button;
@@ -15,7 +15,7 @@ public class SetUseItem : MonoBehaviour
     {
         button = GetComponentInChildren<Button>();
         button.OnClickAsObservable()
-            .Subscribe(_ => game.usingItem = item)
+            .Subscribe(_ => game.usingItemEnum = itemEnum)
             .AddTo(this);
     }
 
