@@ -94,6 +94,32 @@ public class Game : MonoBehaviour
         }
     }
 
+
+    public void SetActiveTargetTile(Tile tile,bool active)
+    {
+        Tile[,] tiles = board.boardTileArray2d;
+        DigItem.ItemInfo itemInfo = _digItem.GetItemInfo(usingItemEnum);
+        for (int i = 0; i < itemInfo.Length; i++)
+        {
+            bool limitColumn = tile.Column + itemInfo.x[i] >= board.Columns || tile.Column + itemInfo.x[i] < 0;
+            bool limitRow = tile.Row + itemInfo.y[i] >= board.Rows || tile.Row + itemInfo.y[i] < 0;
+            if (limitColumn || limitRow)
+                continue;
+
+            var targetTile = tiles[tile.Column + itemInfo.x[i], tile.Row + itemInfo.y[i]];
+
+            if (active)
+            {
+                targetTile.SetTrueToChooseTile();
+            }
+            else
+            {
+                targetTile.SetFalseToChooseTile();
+            }
+
+        }
+    }
+
     private bool CheckGameEnd()
     {
         Tile[,] tiles = board.boardTileArray2d;

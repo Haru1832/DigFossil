@@ -68,7 +68,7 @@ public class Board : MonoBehaviour
                 if (newTile != null)
                 {
                     int random = Random.Range(1, 6);
-                    newTile.Initialize(i, j,random,game);
+                    newTile.Initialize(i, j,random,game,this);
                     m_TilesList.Add(newTile);
                 }
             }

@@ -45,9 +45,9 @@ public class DigItem
     
     static Vector3[] BombInfo = new Vector3[]
     {
-        new Vector3(-1,1,1),new Vector3(0,1,0),new Vector3(1,1,1),
-        new Vector3(-1,0,0), new Vector3(0,0,3),new Vector3(1,0,0),
-        new Vector3(-1,-1,1), new Vector3(0,-1,0),new Vector3(1,-1,1)
+        new Vector3(-1,1,1),new Vector3(1,1,1),
+        new Vector3(0,0,3),
+        new Vector3(-1,-1,1), new Vector3(1,-1,1)
     };
     
 

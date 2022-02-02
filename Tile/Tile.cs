@@ -25,6 +25,10 @@ public class Tile : MonoBehaviour
 
     private Game m_Game;
 
+    private Board m_board;
+    
+    DigItem _digItem = new DigItem();
+
     private void Start()
     {
         _changeTile = chooseTile.GetComponent<ChangeTileAlpha>();
@@ -40,24 +44,34 @@ public class Tile : MonoBehaviour
 
     private void OnMouseOver()
     {
-        // Debug.Log("MouseOver");
-        chooseTile.SetActive(true);
-        StartCoroutine(_changeTile.ColorCoroutine());
+        m_Game.SetActiveTargetTile(this,true);
     }
     
     private void OnMouseExit()
     {
+        m_Game.SetActiveTargetTile(this,false);
+    }
+
+    public void SetFalseToChooseTile()
+    {
         chooseTile.SetActive(false);
         StopCoroutine(_changeTile.ColorCoroutine());
     }
+    
+    public void SetTrueToChooseTile()
+    {
+        chooseTile.SetActive(true);
+        StartCoroutine(_changeTile.ColorCoroutine());
+    }
 
-    public void Initialize(int columnIndex, int rowIndex,int HPIndex,Game game)
+    public void Initialize(int columnIndex, int rowIndex,int HPIndex,Game game,Board board)
     {
         m_Column = columnIndex;
         m_Row = rowIndex;
         m_HP = new HP(HPIndex);
         m_HP.Subscribe(UpdateTile);
         m_Game = game;
+        m_board = board;
         
         UpdateTile(HP.GetHP());
     }
