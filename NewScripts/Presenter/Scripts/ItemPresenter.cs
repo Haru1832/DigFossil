@@ -4,9 +4,16 @@ using UnityEngine;
 
 public class ItemPresenter
 {
-    private Item item;
+    public int X;
+    public int Y;
+    public int Width;
+    public int Height;
+    
     public ItemPresenter(Item item)
     {
-        
+        X = item.X;
+        Y = item.Y;
+        Width = item.Width;
+        Height = item.Height;
     }
 }

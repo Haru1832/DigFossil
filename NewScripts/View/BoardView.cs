@@ -7,9 +7,15 @@ using UnityEngine;
 
 public class BoardView : MonoBehaviour
 {
-    public GameObject PanelPrefab;
+    [SerializeField]
+    private GameObject PanelPrefab;
+    [SerializeField]
+    private GameObject itemPrefab;
 
-    [SerializeField] private GameObject parentObject;
+    [SerializeField] 
+    private GameObject parentObject;
+
+    [SerializeField] private GameObject parentCanvas;
     
     private Ray rayCamera;
     private Camera mainCamera;
@@ -33,7 +39,12 @@ public class BoardView : MonoBehaviour
         _boardPresenter.panels.ObserveAdd().Subscribe(x =>
         {
             InstatiatePanel(x.Value);
-        });
+        }).AddTo(this);
+
+        _boardPresenter.items.ObserveAdd().Subscribe(x =>
+        {   
+            InstatiateItem(x.Value);
+        }).AddTo(this);
 
         _boardPresenter.GenerateInput();
 
@@ -49,11 +60,18 @@ public class BoardView : MonoBehaviour
             }).AddTo(this);
     }
 
-    void InstatiatePanel(PanelPresenter objValue)
+    void InstatiatePanel(PanelPresenter panelPresenter)
     {
-        Debug.Log("Instantiate");
+        Debug.Log("InstantiatePanel");
         var panelObj = Instantiate(PanelPrefab, parentObject.transform, true);
-        panelObj.GetComponent<PanelView>().Init(objValue);
+        panelObj.GetComponent<PanelView>().Init(panelPresenter);
+    }
+
+    void InstatiateItem(ItemPresenter itemPresenter)
+    {
+        Debug.Log("InstantiateItem");
+        var itemObj = Instantiate(itemPrefab, parentCanvas.transform);
+        itemObj.GetComponent<ItemView>().Init(itemPresenter.X,itemPresenter.Y,itemPresenter.Width,itemPresenter.Height);
     }
 
     [SerializeField] private Material empty;
@@ -87,15 +105,22 @@ public class BoardView : MonoBehaviour
             3 => Material3,
             4 => Material4,
             5 => Material5,
-            _ => null
+            _ => Empty
         };
     }
 
     public static Vector2 GetPanelPosition(int x,int y)
     {
         float xPos = -(Model.Width/2f) + x + 0.5f;
-        float yPos = -(Model.Height/2f) + y +0.5f;
+        float yPos = -(Model.Height/2f) + y + 0.5f;
         
+        return new Vector2(xPos,yPos);
+    }
+
+    public static Vector2 GetItemPosition(int x, int y, int width, int height)
+    {
+        float xPos = -(Model.Width/2f) + x + (width/2f) ;
+        float yPos = -(Model.Height/2f) + y + (height/2f);
         return new Vector2(xPos,yPos);
     }
     

@@ -7,6 +7,9 @@ using UnityEngine;
 public class PanelPresenter
 {
     public ReactiveProperty<Panel> Panel;
+
+    public int x;
+    public int y;
     
     private Subject<Panel> _UpdateHPPanel ;
     internal IObserver<Panel> UpdateHPObserver=>_UpdateHPPanel;

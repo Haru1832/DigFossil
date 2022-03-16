@@ -2,17 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemView : MonoBehaviour
+public class ItemView:MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public void Init(int x,int y,int width,int height)
     {
+        SetPosition(x,y,width,height);
         
     }
 
-    // Update is called once per frame
-    void Update()
+    void SetPosition(int x,int y,int width,int height)
     {
+        var vec = BoardView.GetItemPosition(x, y, width, height);
         
+        transform.position = new Vector3(vec.x,vec.y,1);
     }
+    
 }

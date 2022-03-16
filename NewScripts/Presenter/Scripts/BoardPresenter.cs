@@ -8,6 +8,8 @@ using UnityEngine;
 public class BoardPresenter
 {
     public ReactiveCollection<PanelPresenter> panels { get; private set; }
+    
+    public ReactiveCollection<ItemPresenter> items { get; private set; }
 
 
     private Subject<Vector2Int> inputPanelEvent;
@@ -36,6 +38,7 @@ public class BoardPresenter
         Model.Board.IsGameOver.Where(x => x).Subscribe(_ => GameOver());
 
         panels = new ReactiveCollection<PanelPresenter>();
+        items=  new ReactiveCollection<ItemPresenter>();
         
         inputPanelEvent=new Subject<Vector2Int>();
 
@@ -53,14 +56,19 @@ public class BoardPresenter
         {
             var panel = new PanelPresenter(generatePanel.Panel);
             panels.Add(panel);
-            Debug.Log("Generate");
+            Debug.Log("GeneratePanel");
         }
 
     }
 
     void GenerateItem(GenerateItemMessage message)
     {
-        
+        foreach (var generateItem in message.GenerateItems)
+        {
+            var item = new ItemPresenter(generateItem.Item);
+            items.Add(item);
+            Debug.Log("GenerateItem");
+        }
     }
 
     void UpdateHPPanel(UpdateHPMessage message)
