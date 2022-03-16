@@ -2,17 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Item : MonoBehaviour
+public class Item
 {
-    // Start is called before the first frame update
-    void Start()
+    internal Item(ItemEnum itemEnum,int width,int height)
     {
-        
+        ItemEnum=itemEnum;
+        Width = width;
+        Height = height;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public ItemEnum ItemEnum;
+    public int X;
+    public int Y;
+    public int Width;
+    public int Height;
 }

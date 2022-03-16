@@ -4,9 +4,15 @@ using UnityEngine;
 
 public class Panel
 {
-    internal Panel()
+    public Panel()
     {
-        
+    }
+
+    internal Panel(int x,int y,int panelHP)
+    {
+        this.x = x;
+        this.y = y;
+        this.panelHP = panelHP;
     }
     
     public int panelHP;
