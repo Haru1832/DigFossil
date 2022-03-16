@@ -69,15 +69,17 @@ public class BoardPresenter
         {
             Panel _panel = new Panel();
 
+            PanelPresenter _panelPresenter = default;
+
             foreach (var panel in panels)
             {
                 if ((panel.Panel.Value.x == updateHpPanel.Panel.x) && (panel.Panel.Value.y == updateHpPanel.Panel.y))
                 {
-                    _panel=panel.Panel.Value;
+                    _panelPresenter = panel;
                 }
             }
-            
-            var targetPanel = new PanelPresenter(_panel);
+
+            var targetPanel = _panelPresenter;
             //var targetPanel = panels.First(x => (x.Panel.Value.x == updateHpPanel.Panel.x) && (x.Panel.Value.y == updateHpPanel.Panel.y));
             targetPanel.UpdateHPObserver.OnNext(targetPanel.Panel.Value);
         }

@@ -55,21 +55,10 @@ public class PanelBoard
         {
             for (int j = 0; j < _height; j++)
             {
-                // float xPos = -(m_Columns/2f) + i + 0.5f;
-                // float yPos = -(m_Rows/2f) + j ;
-
-                // var newTileObject = GameObject.Instantiate(m_TilePrefab, new Vector3(xPos, 0, yPos), Quaternion.Euler(90,0,0));
-                // var newTile = newTileObject.GetComponent<Tile>();
-
-
-                // if (newTile != null)
-                // {
                 int randomHP = Random.Range(1, 6);
                 var newPanel = new Panel(i, j, randomHP);
                 board[i, j] = newPanel;
                 generatePanelMessage.AddGeneratePanel(newPanel);
-                //Debug.Log(String.Format("[{0},{1}:{2}]",newPanel.x,newPanel.y,newPanel.panelHP));
-                //}
             }
         }
         generatePanel.OnNext(generatePanelMessage);
@@ -130,7 +119,19 @@ public class PanelBoard
                     }
                 }
                 //for文を抜けられたということはアイテムの座標被りが無かった
+                item.X = column;
+                item.Y = row;
             }
+            
+            //アイテムを全て設置完了
+            GenerateItemMessage generatePanelMessage=new GenerateItemMessage();
+            foreach (var item in currentItems)
+            {
+                generatePanelMessage.AddGenerateItem(item);    
+            }
+            
+            generateItem.OnNext(generatePanelMessage);
+            
         }
     }
     

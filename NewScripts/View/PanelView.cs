@@ -5,18 +5,26 @@ using UnityEngine;
 
 public class PanelView : MonoBehaviour
 {
+   public int x;
+   public int y;
    private MeshRenderer _renderer;
    public void Init(PanelPresenter presenter)
    {
       SetMaterial(presenter.Panel.Value.panelHP);
       SetPosition(presenter.Panel.Value.x,presenter.Panel.Value.y);
-      presenter.Panel.Subscribe(x => { SetMaterial(x.panelHP); })
+      presenter.UpdateHPObservable.Subscribe(x =>
+         {
+            SetMaterial(x.panelHP);
+            Debug.Log("UpdateMaterial");
+         })
          .AddTo(this);
    }
 
 
    void SetPosition(int x,int y)
    {
+      this.x = x;
+      this.y = y;
       Vector2 panelPosition = BoardView.GetPanelPosition(x, y);
       transform.position = panelPosition;
    }

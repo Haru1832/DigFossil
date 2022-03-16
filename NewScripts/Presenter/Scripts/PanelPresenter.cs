@@ -10,7 +10,7 @@ public class PanelPresenter
     
     private Subject<Panel> _UpdateHPPanel ;
     internal IObserver<Panel> UpdateHPObserver=>_UpdateHPPanel;
-    public IObservable<Panel> UpadateHPObservable => _UpdateHPPanel;
+    public IObservable<Panel> UpdateHPObservable => _UpdateHPPanel;
     
 
 
@@ -19,7 +19,7 @@ public class PanelPresenter
         _UpdateHPPanel = new Subject<Panel>();
         Panel = new ReactiveProperty<Panel>();
         Panel.Value = panel;
-        UpadateHPObservable.Subscribe(x => { Panel.Value = x; });
+        UpdateHPObservable.Subscribe(x => { Panel.Value = x; });
     }
     
     

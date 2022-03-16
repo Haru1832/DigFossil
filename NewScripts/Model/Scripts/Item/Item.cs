@@ -11,6 +11,12 @@ public class Item
         Height = height;
     }
 
+    internal void Init(int x,int y)
+    {
+        X = x;
+        Y = y;
+    }
+
     public ItemEnum ItemEnum;
     public int X;
     public int Y;
