@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GenerateItemMessage
 {
-    private List<GenerateItem> generateItems{get;}=new List<GenerateItem>();
+    private List<GenerateItem> generateItems=new List<GenerateItem>();
 
     internal void AddGenerateItem(Item item)
     {

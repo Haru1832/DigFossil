@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GeneratePanelMessage
 {
-    private List<GeneratePanel> generatePanels { get; } = new List<GeneratePanel>();
+    private List<GeneratePanel> generatePanels = new List<GeneratePanel>();
 
     internal void AddGeneratePanel(Panel panel)
     {

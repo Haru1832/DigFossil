@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UpdateHPMessage 
 {
-    private List<UpdateHPPanel> updateHPPanels { get; }=new List<UpdateHPPanel>();
+    private List<UpdateHPPanel> updateHPPanels=new List<UpdateHPPanel>();
 
     internal void AddUpdateHPPanel(Panel panel)
     {

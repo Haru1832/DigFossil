@@ -9,12 +9,12 @@ using UnityEngine;
 
 public class BoardPresenter : MonoBehaviour
 {
-    [SerializeField] private BoardView _boardView;
+    [SerializeField] private BoardView boardView;
 
     public List<PanelPresenter> panels;
     public List<ItemPresenter> items;
-    private Subject<Vector2Int> inputPanelEvent;
-    public IObserver<Vector2Int> InputPanelEvent=>inputPanelEvent;
+    private Subject<Vector2Int> _inputPanelEvent;
+    public IObserver<Vector2Int> InputPanelEvent=>_inputPanelEvent;
     
 
 
@@ -22,8 +22,8 @@ public class BoardPresenter : MonoBehaviour
     {
         panels = new List<PanelPresenter>();
         items=  new List<ItemPresenter>();
-        inputPanelEvent=new Subject<Vector2Int>();
-        inputPanelEvent.Subscribe(Model.Board.Dig);
+        _inputPanelEvent=new Subject<Vector2Int>();
+        _inputPanelEvent.Subscribe(Model.Board.Dig);
         
         
         SubscribeModel();
@@ -47,7 +47,7 @@ public class BoardPresenter : MonoBehaviour
         foreach (var generatePanel in message.GeneratePanels)
         {
             
-            PanelView  panelView= _boardView.InstatiatePanel(generatePanel.Panel);
+            PanelView  panelView= boardView.InstatiatePanel(generatePanel.Panel);
             
             var panel = new PanelPresenter(generatePanel.Panel,panelView);
             panels.Add(panel);
@@ -60,7 +60,7 @@ public class BoardPresenter : MonoBehaviour
         foreach (var generateItem in message.GenerateItems)
         {
             var item = new ItemPresenter(generateItem.Item);
-            _boardView.InstatiateItem(item);
+            boardView.InstatiateItem(item);
             items.Add(item);
             Debug.Log("GenerateItem");
         }
@@ -93,18 +93,11 @@ public class BoardPresenter : MonoBehaviour
         //Vieｗのゲームオーバー処理
     }
 
-
-    //Viewからボード生成
+    
     public void GenerateBoard()
     {
         Model.Board.Generate();
     }
     
-    
-    //テスト用にInternalで関数
-    internal void InputDig(Vector2Int vec)
-    {
-        InputPanelEvent.OnNext(vec);
-    }
     
 }

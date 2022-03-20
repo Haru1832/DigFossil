@@ -47,10 +47,4 @@ public class MaterialProvider : MonoBehaviour
             _ => Empty
         };
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

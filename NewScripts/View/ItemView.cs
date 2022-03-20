@@ -7,7 +7,6 @@ public class ItemView:MonoBehaviour
     public void Init(int x,int y,int width,int height)
     {
         SetPosition(x,y,width,height);
-        
     }
 
     void SetPosition(int x,int y,int width,int height)

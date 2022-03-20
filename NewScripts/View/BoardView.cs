@@ -103,21 +103,4 @@ public class BoardView : MonoBehaviour
         }
         return false;
     }
-    
-    
-    // //パネルに対するRaycast(上の型指定版を現在使用)
-    // private bool RayCastToPanel(out PanelView panelObj)
-    // {
-    //     panelObj = null;
-    //     rayCamera = mainCamera.ScreenPointToRay(Input.mousePosition);
-    //     if (Physics.Raycast(rayCamera, out RaycastHit hit))
-    //     {
-    //         if (hit.transform.TryGetComponent<PanelView>(out var obj))
-    //         {
-    //             panelObj = obj;
-    //             return true;
-    //         }
-    //     }
-    //     return false;
-    // }
 }

@@ -10,15 +10,15 @@ public class PanelBoard
 {
     
     //監視対象の提供
-    private Subject<UpdateHPMessage> updateUIPanel  = new Subject<UpdateHPMessage>();
-    private Subject<GeneratePanelMessage> generatePanel  = new Subject<GeneratePanelMessage>();
+    private Subject<UpdateHPMessage> _updateUIPanel  = new Subject<UpdateHPMessage>();
+    private Subject<GeneratePanelMessage> _generatePanel  = new Subject<GeneratePanelMessage>();
     
-    private Subject<GenerateItemMessage> generateItem = new Subject<GenerateItemMessage>();
+    private Subject<GenerateItemMessage> _generateItem = new Subject<GenerateItemMessage>();
 
 
-    public IObservable<UpdateHPMessage> UpdateHPPanel => updateUIPanel;
-    public IObservable<GeneratePanelMessage> GeneratePanel => generatePanel;
-    public IObservable<GenerateItemMessage> GenerateItem => generateItem;
+    public IObservable<UpdateHPMessage> UpdateHPPanel => _updateUIPanel;
+    public IObservable<GeneratePanelMessage> GeneratePanel => _generatePanel;
+    public IObservable<GenerateItemMessage> GenerateItem => _generateItem;
 
 
     ReactiveProperty<bool> isClear;
@@ -64,8 +64,8 @@ public class PanelBoard
                 generatePanelMessage.AddGeneratePanel(newPanel);
             }
         }
-        generatePanel.OnNext(generatePanelMessage);
-        Debug.Log(generatePanel);
+        _generatePanel.OnNext(generatePanelMessage);
+        Debug.Log(_generatePanel);
         GenerateItems();
     }
 
@@ -133,7 +133,7 @@ public class PanelBoard
                 generatePanelMessage.AddGenerateItem(item);    
             }
             
-            generateItem.OnNext(generatePanelMessage);
+            _generateItem.OnNext(generatePanelMessage);
             
         }
     }
@@ -149,7 +149,7 @@ public class PanelBoard
         UpdateHPMessage updateHpPanel = new UpdateHPMessage();
         
         updateHpPanel.AddUpdateHPPanel(panel);
-        updateUIPanel.OnNext(updateHpPanel);
+        _updateUIPanel.OnNext(updateHpPanel);
         
         Debug.Log(String.Format("[{0},{1}:{2}:{3}]",panel.x,panel.y,panel.panelHP,panel.isUnderItem));
 
