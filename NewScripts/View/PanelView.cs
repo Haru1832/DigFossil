@@ -6,16 +6,16 @@ using UnityEngine;
 public class PanelView : MonoBehaviour
 {
    //Raycastで取得した時にx,yを取得できるための変数
-   public int x;
-   public int y;
+   public int X;
+   public int Y;
    
    private MeshRenderer _renderer;
    
    
    public void Init(Panel panel)
    {
-      SetMaterial(panel.panelHP);
-      SetPosition(panel.x,panel.y);
+      SetMaterial(panel.PanelHP);
+      SetPosition(panel.X,panel.Y);
    }
 
    public void UpdateHPView(int HPValue)
@@ -26,8 +26,8 @@ public class PanelView : MonoBehaviour
 
    void SetPosition(int x,int y)
    {
-      this.x = x;
-      this.y = y;
+      X = x;
+      Y = y;
       Vector2 panelPosition = BoardView.GetPanelPosition(x, y);
       transform.position = panelPosition;
    }

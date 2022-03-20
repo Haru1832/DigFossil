@@ -15,7 +15,6 @@ public class BoardPresenter : MonoBehaviour
     public List<ItemPresenter> items;
     private Subject<Vector2Int> _inputPanelEvent;
     public IObserver<Vector2Int> InputPanelEvent=>_inputPanelEvent;
-    
 
 
     private void Start()
@@ -75,9 +74,9 @@ public class BoardPresenter : MonoBehaviour
 
             foreach (var panel in panels)
             {
-                if ((panel.Panel.x == updateHpPanel.Panel.x) && (panel.Panel.y == updateHpPanel.Panel.y))
+                if ((panel.Panel.X == updateHpPanel.Panel.X) && (panel.Panel.Y == updateHpPanel.Panel.Y))
                 {
-                    panel.UpdateHP(panel.Panel.panelHP);
+                    panel.UpdateHP(panel.Panel.PanelHP);
                 }
             }
         }

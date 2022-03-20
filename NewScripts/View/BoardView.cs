@@ -25,12 +25,8 @@ public class BoardView : MonoBehaviour
     
     [SerializeField]
     private BoardPresenter _boardPresenter;
-
-    private void Awake()
-    {
-        
-    }
-
+    
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -43,7 +39,7 @@ public class BoardView : MonoBehaviour
             {
                 if (RayCastToObject<PanelView>(out var _panel))
                 {
-                    _boardPresenter.InputPanelEvent.OnNext(new Vector2Int(_panel.x,_panel.y));
+                    _boardPresenter.InputPanelEvent.OnNext(new Vector2Int(_panel.X,_panel.Y));
                 }
                 
             }).AddTo(this);

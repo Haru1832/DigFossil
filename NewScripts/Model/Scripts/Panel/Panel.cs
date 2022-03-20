@@ -8,13 +8,13 @@ public class Panel
 
     internal Panel(int x,int y,int panelHP)
     {
-        this.x = x;
-        this.y = y;
-        this.panelHP = panelHP;
+        this.X = x;
+        this.Y = y;
+        this.PanelHP = panelHP;
     }
     
-    public int panelHP;
-    public int x;
-    public int y;
-    public bool isUnderItem;
+    public int PanelHP;
+    public int X;
+    public int Y;
+    public bool IsUnderItem;
 }

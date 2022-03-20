@@ -101,13 +101,13 @@ public class PanelBoard
                     {
                         var panel = board[column + i, row + j];
                         //アイテムの位置が被った時
-                        if (panel.isUnderItem || panel == null)
+                        if (panel.IsUnderItem || panel == null)
                         {
                             
                             //一旦リセットして再起
                             foreach (var _panel in board)
                             {
-                                _panel.isUnderItem = false;
+                                _panel.IsUnderItem = false;
                             }
                             currentItems.Clear();
                             SetItems();
@@ -116,7 +116,7 @@ public class PanelBoard
                         else
                         {
                             //置けたということでアイテムがあるフラグを設定
-                            panel.isUnderItem = true;
+                            panel.IsUnderItem = true;
                         }
 
                     }
@@ -151,17 +151,17 @@ public class PanelBoard
         updateHpPanel.AddUpdateHPPanel(panel);
         _updateUIPanel.OnNext(updateHpPanel);
         
-        Debug.Log(String.Format("[{0},{1}:{2}:{3}]",panel.x,panel.y,panel.panelHP,panel.isUnderItem));
+        Debug.Log(String.Format("[{0},{1}:{2}:{3}]",panel.X,panel.Y,panel.PanelHP,panel.IsUnderItem));
 
 
 
         //HP減算処理
         void SubstractHP(Panel panel)
         {
-            panel.panelHP -= 1;
-            if (panel.panelHP <= 0 && panel.isUnderItem)
+            panel.PanelHP -= 1;
+            if (panel.PanelHP <= 0 && panel.IsUnderItem)
             {
-                panel.isUnderItem = false;
+                panel.IsUnderItem = false;
             }
             
             //クリアチェック
@@ -178,7 +178,7 @@ public class PanelBoard
     {
         foreach (var panel in board)
         {
-            if (panel.isUnderItem && panel.panelHP > 0)
+            if (panel.IsUnderItem && panel.PanelHP > 0)
                 return false;
         }
         
