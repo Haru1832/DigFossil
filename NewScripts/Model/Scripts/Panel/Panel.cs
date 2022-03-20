@@ -5,9 +5,6 @@ using UnityEngine;
 public class Panel
 {
     //表示されるパネルの情報
-    public Panel()
-    {
-    }
 
     internal Panel(int x,int y,int panelHP)
     {

@@ -39,6 +39,8 @@ public class BoardView : MonoBehaviour
     
     private Ray rayCamera;
     private Camera mainCamera;
+    
+    [SerializeField]
     private BoardPresenter _boardPresenter;
 
     private void Awake()
@@ -56,23 +58,6 @@ public class BoardView : MonoBehaviour
     {
         mainCamera=Camera.main;
         
-        //PresenterがMonoBehaviourを継承していないのでインスタンスできる（Unity上にアタッチもしない）
-        _boardPresenter = new BoardPresenter();
-        
-        //Presenterで追加されたらパネル
-        _boardPresenter.panels.ObserveAdd().Subscribe(x =>
-        {
-            InstatiatePanel(x.Value);
-        }).AddTo(this);
-
-        //Presenterで追加されたらアイテム追加生成
-        _boardPresenter.items.ObserveAdd().Subscribe(x =>
-        {   
-            InstatiateItem(x.Value);
-        }).AddTo(this);
-
-        _boardPresenter.GenerateBoard();
-
         //パネルを掘る入力
         this.UpdateAsObservable()
             .Where(_ => Input.GetMouseButtonDown(0))
@@ -88,25 +73,26 @@ public class BoardView : MonoBehaviour
 
     
     //Unity上にパネル生成
-    void InstatiatePanel(PanelPresenter panelPresenter)
+    public PanelView InstatiatePanel(Panel panel)
     {
         Debug.Log("InstantiatePanel");
         var panelObj = Instantiate(PanelPrefab, parentObject.transform, true);
-        panelObj.GetComponent<PanelView>().Init(panelPresenter);
+        PanelView panelView = panelObj.GetComponent<PanelView>();
+        panelView.Init(panel);
+        return panelView;
     }
 
     //Unity上にアイテム生成
-    void InstatiateItem(ItemPresenter itemPresenter)
+    public void InstatiateItem(ItemPresenter itemPresenter)
     {
         Debug.Log("InstantiateItem");
         var itemObj = Instantiate(itemPrefab, parentCanvas.transform);
         itemObj.GetComponent<ItemView>().Init(itemPresenter.X,itemPresenter.Y,itemPresenter.Width,itemPresenter.Height);
     }
 
-    
-    
-    
-    
+
+
+
     public static Material GetMaterial(int HPValue)
     {
         return HPValue switch

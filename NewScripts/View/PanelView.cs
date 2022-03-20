@@ -12,17 +12,15 @@ public class PanelView : MonoBehaviour
    private MeshRenderer _renderer;
    
    
-   public void Init(PanelPresenter presenter)
+   public void Init(Panel panel)
    {
-      SetMaterial(presenter.Panel.Value.panelHP);
-      SetPosition(presenter.Panel.Value.x,presenter.Panel.Value.y);
-      
-      presenter.UpdateHPObservable.Subscribe(x =>
-         {
-            SetMaterial(x.panelHP);
-            Debug.Log("UpdateMaterial");
-         })
-         .AddTo(this);
+      SetMaterial(panel.panelHP);
+      SetPosition(panel.x,panel.y);
+   }
+
+   public void UpdateHPView(int HPValue)
+   {
+      SetMaterial(HPValue);
    }
 
 

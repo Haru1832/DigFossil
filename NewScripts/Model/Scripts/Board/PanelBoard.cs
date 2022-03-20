@@ -10,10 +10,10 @@ public class PanelBoard
 {
     
     //監視対象の提供
-    private Subject<UpdateHPMessage> updateUIPanel { get; set; } = new Subject<UpdateHPMessage>();
-    private Subject<GeneratePanelMessage> generatePanel { get; set; } = new Subject<GeneratePanelMessage>();
+    private Subject<UpdateHPMessage> updateUIPanel  = new Subject<UpdateHPMessage>();
+    private Subject<GeneratePanelMessage> generatePanel  = new Subject<GeneratePanelMessage>();
     
-    private Subject<GenerateItemMessage> generateItem { get; set; } = new Subject<GenerateItemMessage>();
+    private Subject<GenerateItemMessage> generateItem = new Subject<GenerateItemMessage>();
 
 
     public IObservable<UpdateHPMessage> UpdateHPPanel => updateUIPanel;
@@ -30,7 +30,7 @@ public class PanelBoard
     
     
     //盤面のパネル配列を保存
-    internal Panel[,] board { get; set; }
+    internal Panel[,] board;
     
     //使用するアイテム
     List<Item> stageItems;
@@ -87,9 +87,7 @@ public class PanelBoard
 
                 var column = Random.Range(0, canColumns);
                 var row = Random.Range(0, canRows);
-
-                // float xPos = -(m_Columns/2f) + column + (item.width/2f) ;
-                // float yPos = -(m_Rows/2f) + row + (item.height/2f)-0.5f;
+                
 
 
                 currentItems.Add(item);

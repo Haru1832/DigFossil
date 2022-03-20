@@ -6,24 +6,23 @@ using UnityEngine;
 
 public class PanelPresenter
 {
-    public ReactiveProperty<Panel> Panel;
+    public Panel Panel;
 
-    public int x;
-    public int y;
-    
     private Subject<Panel> _UpdateHPPanel ;
-    internal IObserver<Panel> UpdateHPObserver=>_UpdateHPPanel;
-    public IObservable<Panel> UpdateHPObservable => _UpdateHPPanel;
-    
 
+    private PanelView _panelView;
 
-    public PanelPresenter(Panel panel)
+    public PanelPresenter(Panel panel,PanelView panelView)
     {
+        this._panelView = panelView;
+        Panel = panel;
+        
         _UpdateHPPanel = new Subject<Panel>();
-        Panel = new ReactiveProperty<Panel>();
-        Panel.Value = panel;
-        UpdateHPObservable.Subscribe(x => { Panel.Value = x; });
     }
-    
-    
+
+    public void UpdateHP(int HPValue)
+    {
+        _panelView.UpdateHPView(HPValue);
+    }
+
 }
