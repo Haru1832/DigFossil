@@ -7,6 +7,8 @@ using UnityEngine.TestTools;
 
 public class PresenterTest
 {
+    //テスト用のスクリプト
+    
     // A Test behaves as an ordinary method
     [Test]
     public void PresenterTestSimple()
@@ -14,13 +16,15 @@ public class PresenterTest
         // Use the Assert class to test conditions
         BoardPresenter boardPresenter = new BoardPresenter();
         
-        boardPresenter.GenerateInput();
+        boardPresenter.GenerateBoard();
+        //クリアできるまで掘る
         while (!boardPresenter.IsClear.Value)
         {
             int randomX = Random.Range(0, Model.Width);
             int randomY = Random.Range(0, Model.Height);
             boardPresenter.InputDig(new Vector2Int(randomX,randomY));
         }
+        Assert.That(true);
     }
 
 }

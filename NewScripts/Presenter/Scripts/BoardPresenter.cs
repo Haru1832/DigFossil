@@ -2,13 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.ExceptionServices;
+using System.Threading.Tasks;
 using UniRx;
 using UnityEngine;
 
 public class BoardPresenter
 {
     public ReactiveCollection<PanelPresenter> panels { get; private set; }
-    
     public ReactiveCollection<ItemPresenter> items { get; private set; }
 
 
@@ -16,49 +17,43 @@ public class BoardPresenter
     public IObserver<Vector2Int> InputPanelEvent=>inputPanelEvent;
 
     private ReactiveProperty<bool> isClear;
-
     public IReadOnlyReactiveProperty<bool> IsClear => isClear;
     
     private ReactiveProperty<bool> isGameOver;
-
     public IReadOnlyReactiveProperty<bool> IsGameOver => isGameOver;
 
     public BoardPresenter()
     {
         isGameOver=new ReactiveProperty<bool>();
         isClear = new ReactiveProperty<bool>();
+        panels = new ReactiveCollection<PanelPresenter>();
+        items=  new ReactiveCollection<ItemPresenter>();
+        inputPanelEvent=new Subject<Vector2Int>();
+        inputPanelEvent.Subscribe(Model.Board.Dig);
         
+        SubscribeModel();
+    }
 
-        
+
+    void SubscribeModel()
+    {
         Model.Board.GeneratePanel.Subscribe(GeneratePanel);
         Model.Board.GenerateItem.Subscribe(GenerateItem);
         Model.Board.UpdateHPPanel.Subscribe(UpdateHPPanel);
 
-        Model.Board.IsClear.Where(x=>x).Subscribe(_=>Clear());
-        Model.Board.IsGameOver.Where(x => x).Subscribe(_ => GameOver());
-
-        panels = new ReactiveCollection<PanelPresenter>();
-        items=  new ReactiveCollection<ItemPresenter>();
-        
-        inputPanelEvent=new Subject<Vector2Int>();
-
-        inputPanelEvent.Subscribe(Model.Board.Dig);
-        
-        
-        
+        Model.Board.IsClear.Where(x => x).Subscribe(_ => isClear.Value = true);
+        Model.Board.IsGameOver.Where(x => x).Subscribe(_ => isGameOver.Value = true);
     }
 
 
     void GeneratePanel(GeneratePanelMessage message)
     {
-
         foreach (var generatePanel in message.GeneratePanels)
         {
             var panel = new PanelPresenter(generatePanel.Panel);
             panels.Add(panel);
             Debug.Log("GeneratePanel");
         }
-
     }
 
     void GenerateItem(GenerateItemMessage message)
@@ -70,7 +65,8 @@ public class BoardPresenter
             Debug.Log("GenerateItem");
         }
     }
-
+    
+    
     void UpdateHPPanel(UpdateHPMessage message)
     {
         foreach (var updateHpPanel in message.UpdateHPPanels)
@@ -86,29 +82,23 @@ public class BoardPresenter
                     _panelPresenter = panel;
                 }
             }
+            
 
             var targetPanel = _panelPresenter;
-            //var targetPanel = panels.First(x => (x.Panel.Value.x == updateHpPanel.Panel.x) && (x.Panel.Value.y == updateHpPanel.Panel.y));
             targetPanel.UpdateHPObserver.OnNext(targetPanel.Panel.Value);
         }
     }
-
-    void Clear()
-    {
-        isClear.Value = true;
-        Debug.Log("clearPresenter");
-    }
-
-    void GameOver()
-    {
-        isGameOver.Value = true;
-    }
-
-
-    public void GenerateInput()
+    
+    
+    
+    //Viewからボード生成
+    public void GenerateBoard()
     {
         Model.Board.Generate();
     }
+    
+    
+    //テスト用にInternalで関数
     internal void InputDig(Vector2Int vec)
     {
         InputPanelEvent.OnNext(vec);

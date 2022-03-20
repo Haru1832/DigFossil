@@ -5,8 +5,11 @@ using UniRx;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
+
 public class PanelBoard
 {
+    
+    //監視対象の提供
     private Subject<UpdateHPMessage> updateUIPanel { get; set; } = new Subject<UpdateHPMessage>();
     private Subject<GeneratePanelMessage> generatePanel { get; set; } = new Subject<GeneratePanelMessage>();
     
@@ -19,17 +22,17 @@ public class PanelBoard
 
 
     ReactiveProperty<bool> isClear;
-
     public IReadOnlyReactiveProperty<bool> IsClear => isClear;
     
     ReactiveProperty<bool> isGameOver;
-
     public IReadOnlyReactiveProperty<bool> IsGameOver => isGameOver;
     
     
     
+    //盤面のパネル配列を保存
     internal Panel[,] board { get; set; }
     
+    //使用するアイテム
     List<Item> stageItems;
 
     private int _width;
@@ -44,10 +47,10 @@ public class PanelBoard
         board = new Panel[width, height];
         isClear = new ReactiveProperty<bool>();
         isGameOver = new ReactiveProperty<bool>();
-        
-
     }
+    
 
+    //パネルの生成
     public void Generate()
     {
         GeneratePanelMessage generatePanelMessage=new GeneratePanelMessage();
@@ -66,6 +69,8 @@ public class PanelBoard
         GenerateItems();
     }
 
+    
+    //アイテムの生成
     private void GenerateItems()
     {
         SetItems();
@@ -136,6 +141,7 @@ public class PanelBoard
     }
     
     
+    //掘る処理（ポジション指定）
     public void Dig(Vector2Int digPosition)
     {
         var panel = board[digPosition.x, digPosition.y];
@@ -148,12 +154,10 @@ public class PanelBoard
         updateUIPanel.OnNext(updateHpPanel);
         
         Debug.Log(String.Format("[{0},{1}:{2}:{3}]",panel.x,panel.y,panel.panelHP,panel.isUnderItem));
-        
-        
-
-        
 
 
+
+        //HP減算処理
         void SubstractHP(Panel panel)
         {
             panel.panelHP -= 1;
@@ -162,6 +166,7 @@ public class PanelBoard
                 panel.isUnderItem = false;
             }
             
+            //クリアチェック
             if (CheckGameClear())
             {
                 isClear.Value = true;

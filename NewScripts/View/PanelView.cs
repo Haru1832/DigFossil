@@ -5,13 +5,18 @@ using UnityEngine;
 
 public class PanelView : MonoBehaviour
 {
+   //Raycastで取得した時にx,yを取得できるための変数
    public int x;
    public int y;
+   
    private MeshRenderer _renderer;
+   
+   
    public void Init(PanelPresenter presenter)
    {
       SetMaterial(presenter.Panel.Value.panelHP);
       SetPosition(presenter.Panel.Value.x,presenter.Panel.Value.y);
+      
       presenter.UpdateHPObservable.Subscribe(x =>
          {
             SetMaterial(x.panelHP);
