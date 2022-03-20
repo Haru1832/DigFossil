@@ -35,7 +35,7 @@ public class PanelView : MonoBehaviour
    void SetMaterial(int HPValue)
    {
       _renderer = GetComponent<MeshRenderer>();
-      Material material = BoardView.GetMaterial(HPValue);
+      Material material = MaterialProvider.GetMaterial(HPValue);
       _renderer.material = material;
    }
 }
